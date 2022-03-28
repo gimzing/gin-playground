@@ -1,16 +1,17 @@
 package main
 
 import (
-	"log"
-
-	routes "github.com/gimzingy/gin-playground/routes"
 	"github.com/gin-gonic/gin"
+
+	"gin-playground/controllers"
+	"gin-playground/models"
 )
 
 func main() {
-	// Init Router
-	router := gin.Default()
-	// Route Handlers / Endpoints
-	routes.Routes(router)
-	log.Fatal(router.Run(":4747"))
+	r := gin.Default()
+
+	models.ConnectDatabase()
+	r.GET("/users", controllers.FindUsers)
+	r.POST("/users", controllers.CreateUser)
+	r.Run()
 }
